@@ -54,6 +54,8 @@ public class RecipeBaseAdapter extends BaseAdapter {
         }
         MyHolder myHolder = (MyHolder) view.getTag();
         myHolder.recipeTitle.setText(mData.get(position).getName_recipe());
+        myHolder.recipeType.setText(mData.get(position).getType());
+        myHolder.recipeDifficulty.setText(mData.get(position).getDifficulty());
         myHolder.img_recipe_thumbnail.setImageBitmap(BitmapFactory.decodeByteArray(mData.get(position).getImageBytes(), 0, mData.get(position).getImageBytes().length));
 
         view.setOnClickListener(v -> {
@@ -67,9 +69,12 @@ public class RecipeBaseAdapter extends BaseAdapter {
             //Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("RecipeName", mData.get(position).getName_recipe());
+            intent.putExtra("RecipeType", mData.get(position).getType());
+            intent.putExtra("RecipeDifficulty", mData.get(position).getDifficulty());
             intent.putExtra("RecipeIngredients", mData.get(position).getIngredients_recipe());
             intent.putExtra("RecipeMethodTitle", mData.get(position).getDescription_recipe());
             intent.putExtra("ImageBytes", mData.get(position).getImageBytes());
+
             mContext.startActivity(intent);
         });
         return view;
@@ -77,9 +82,13 @@ public class RecipeBaseAdapter extends BaseAdapter {
 
     public class MyHolder {
         TextView recipeTitle;
+        TextView recipeType;
+        TextView recipeDifficulty;
         ImageView img_recipe_thumbnail;
         public MyHolder(View itemView) {
             recipeTitle = itemView.findViewById(R.id.recipe_text);
+            recipeType = itemView.findViewById(R.id.recipe_type);
+            recipeDifficulty = itemView.findViewById(R.id.recipe_difficulty);
             img_recipe_thumbnail = itemView.findViewById(R.id.recipe_img_id);
         }
     }

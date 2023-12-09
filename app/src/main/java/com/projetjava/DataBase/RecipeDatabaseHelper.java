@@ -22,6 +22,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_RECIPE = "recipes";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAME = "name_recipe";
+    private static final String COLUMN_TYPE = "type_recipe";
+    private static final String COLUMN_DIFFICULTY = "difficulty_recipe";
     private static final String COLUMN_DESCRIPTION = "description_recipe";
     private static final String COLUMN_INGREDIENTS = "ingredients_recipe";
     private static final String COLUMN_IMAGE = "image_bytes";
@@ -30,6 +32,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_RECIPE = "CREATE TABLE " + TABLE_RECIPE + "("
             + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
             + COLUMN_NAME + " TEXT,"
+            + COLUMN_TYPE + " TEXT,"
+            + COLUMN_DIFFICULTY + " TEXT,"
             + COLUMN_DESCRIPTION + " TEXT,"
             + COLUMN_INGREDIENTS + " TEXT,"
             + COLUMN_IMAGE + " BLOB"
@@ -52,10 +56,12 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
     // CRUD Operations
 
-    public long addRecipe(String name, String description, String ingredients, byte[] imageBytes) {
+    public long addRecipe(String name,String type,String difficulty, String description, String ingredients, byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
+        values.put(COLUMN_TYPE, type);
+        values.put(COLUMN_DIFFICULTY,difficulty );
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_INGREDIENTS, ingredients);
         values.put(COLUMN_IMAGE, imageBytes);
@@ -69,7 +75,7 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public Recipe getRecipe(long recipeId) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_INGREDIENTS, COLUMN_IMAGE};
+        String[] columns = {COLUMN_ID, COLUMN_NAME,COLUMN_TYPE,COLUMN_DIFFICULTY, COLUMN_DESCRIPTION, COLUMN_INGREDIENTS, COLUMN_IMAGE};
         String selection = COLUMN_ID + "=?";
         String[] selectionArgs = {String.valueOf(recipeId)};
         Cursor cursor = db.query(TABLE_RECIPE, columns, selection, selectionArgs, null, null, null);
@@ -82,6 +88,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             recipe = new Recipe(
                     cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
                     cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
+                    cursor.getString(cursor.getColumnIndex(COLUMN_TYPE)),
+                    cursor.getString(cursor.getColumnIndex(COLUMN_DIFFICULTY)),
                     cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)),
                     cursor.getString(cursor.getColumnIndex(COLUMN_INGREDIENTS)),
                     cursor.getBlob(cursor.getColumnIndex(COLUMN_IMAGE))
@@ -92,10 +100,12 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         return recipe;
     }
 
-    public int updateRecipe(long recipeId, String name, String description, String ingredients, byte[] imageBytes) {
+    public int updateRecipe(long recipeId, String name,String type, String difficulty, String description, String ingredients, byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, name);
+        values.put(COLUMN_TYPE, type);
+        values.put(COLUMN_DIFFICULTY,difficulty);
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_INGREDIENTS, ingredients);
         values.put(COLUMN_IMAGE, imageBytes);
@@ -123,7 +133,7 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     public List<Recipe> getAllRecipes() {
         List<Recipe> recipeList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION, COLUMN_INGREDIENTS, COLUMN_IMAGE};
+        String[] columns = {COLUMN_ID, COLUMN_NAME,COLUMN_TYPE,COLUMN_DIFFICULTY, COLUMN_DESCRIPTION, COLUMN_INGREDIENTS, COLUMN_IMAGE};
 
         Cursor cursor = db.query(TABLE_RECIPE, columns, null, null, null, null, null);
 
@@ -132,6 +142,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
                Recipe recipe = new Recipe(
                         cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
+                       cursor.getString(cursor.getColumnIndex(COLUMN_TYPE)),
+                       cursor.getString(cursor.getColumnIndex(COLUMN_DIFFICULTY)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)),
                         cursor.getString(cursor.getColumnIndex(COLUMN_INGREDIENTS)),
                         cursor.getBlob(cursor.getColumnIndex(COLUMN_IMAGE))
