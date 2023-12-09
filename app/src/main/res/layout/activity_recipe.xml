@@ -64,6 +64,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_semibold"
             android:text="Recipe Name"
+            android:textColor="#E8810C"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -120,12 +121,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Ingredients"
+        android:text="Ingredients : "
         android:fontFamily="@font/poppins_semibold"
         android:textStyle="bold"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/black"
+        android:textColor="#E8810C"
         />
         <!--android:background="@drawable/rounded_corners"-->
 

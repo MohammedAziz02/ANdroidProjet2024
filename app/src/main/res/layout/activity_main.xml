@@ -43,7 +43,9 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#E8810C"
             android:textSize="13dp"
-            android:text="New" />
+            android:text="New"
+            android:fontFamily="@font/poppins_semibold"
+            />
     </LinearLayout>
 
     <ListView
@@ -53,7 +55,8 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="12dp"
+        />
 
 
 

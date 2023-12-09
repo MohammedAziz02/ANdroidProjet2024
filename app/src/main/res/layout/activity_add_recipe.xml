@@ -34,6 +34,7 @@
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:hint="Recipe's name" />
 
     <EditText
@@ -41,23 +42,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:fontFamily="@font/poppins_semibold"
         android:hint="Description" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
         <TextView
 
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="center"
             android:padding="10dp"
-        android:gravity="center"
-        android:text="Type        : "
 
-        />
+            android:text="Type        : " />
 
         <Spinner
         android:id="@+id/type"
@@ -72,17 +75,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
+
         <TextView
 
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:padding="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
-            android:text="Difficulty : "
+            android:padding="10dp"
 
-            />
+            android:text="Difficulty : " />
     <Spinner
         android:id="@+id/difficulty"
         android:layout_width="0dp"
@@ -91,10 +95,12 @@
         android:layout_marginTop="8dp"
         />
     </LinearLayout>
+
     <EditText
         android:id="@+id/editTextIngredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_semibold"
         android:hint="Ingredients" />
 
 
@@ -103,10 +109,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Choose an image"
         android:backgroundTint="#E8810C"
+        android:fontFamily="@font/poppins_semibold"
 
-        />
+        android:text="Choose an image" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -121,6 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="#E8810C"
+        android:fontFamily="@font/poppins_semibold"
         android:text="Add new recipe" />
 
 </LinearLayout>
