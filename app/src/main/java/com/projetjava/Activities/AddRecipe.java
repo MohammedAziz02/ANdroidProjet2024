@@ -6,22 +6,32 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.projetjava.DataBase.RecipeDatabaseHelper;
 import com.projetjava.R;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 // c'est la classe qui permet de faire la logique d'ajout de la recipe au Data base
 public class AddRecipe extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private EditText editTextName, editTextDescription, editTextIngredients;
+    private Spinner type,difficulty;
     private ImageView imageView;
     private Button btnChooseImage, btnSubmit;
+
+    String typeChoose,difficultyChoose;
 
     // ici j'ai créer ce variable juste pour préserver son état car avant d'envoyer la formualaire on doit afficher l'image et
     // par la suite on click sur envoyer pour ajouter cette recipe à la base de données.
@@ -33,6 +43,41 @@ public class AddRecipe extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_recipe);
         setTitle("Add Recipe");
+        type= findViewById(R.id.type);
+        difficulty= findViewById(R.id.difficulty);
+
+        List<String> types= new ArrayList<>(Arrays.asList("Breakfast","Lunch","Dinner","Snack"));
+        List<String> difficulties= new ArrayList<>(Arrays.asList("Beginner","Intermediate","Advanced"));
+
+        ArrayAdapter<String> typeAdapter= new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,types);
+        ArrayAdapter<String> difficultyAdapter= new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,difficulties);
+
+        type.setAdapter(typeAdapter);
+        difficulty.setAdapter(difficultyAdapter);
+
+        type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                typeChoose=types.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        difficulty.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                difficultyChoose=difficulties.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         recipeDatabaseHelper = new RecipeDatabaseHelper(getBaseContext());
         loadViews();
@@ -48,24 +93,25 @@ public class AddRecipe extends AppCompatActivity {
             byte[] imageInBytes=imageBytes;
             System.out.println("btn submit clicked ");
             if(nameRecipe!=null && !nameRecipe.equals("") && descriptionRecipe!=null && !descriptionRecipe.equals("") && ingredientsRecipe!=null && !ingredientsRecipe.equals("")
-            && imageInBytes!=null
+            && imageInBytes!=null &&typeChoose!=null && difficultyChoose!=null
             ){
                 System.out.println("tous les champs sont correctes ");
-              long result = recipeDatabaseHelper.addRecipe(nameRecipe,descriptionRecipe,ingredientsRecipe,imageBytes);
+                System.out.println(typeChoose+ "  :  "+difficultyChoose);
+              long result = recipeDatabaseHelper.addRecipe(nameRecipe,typeChoose.toString(),difficultyChoose.toString(),descriptionRecipe,ingredientsRecipe,imageBytes);
               if(result!=-1){
                   System.out.println("bien ajoute au db");
-                  Toast.makeText(getBaseContext(),"Success : Recipe est bien ajouté",Toast.LENGTH_LONG).show();
+                  Toast.makeText(getBaseContext(),"Success : Recipe is added successfully!",Toast.LENGTH_LONG).show();
                   // on fait revenir à l'activité MAin
                   Intent i = new Intent(getBaseContext(),MainActivity.class);
                   startActivity(i);
               }else{
                   System.out.println("n'a pas bien ajoute au db");
-                  Toast.makeText(getBaseContext(),"Failure : Recipe n'est pas ajouté",Toast.LENGTH_LONG).show();
+                  Toast.makeText(getBaseContext(),"Failure : Recipe not added!",Toast.LENGTH_LONG).show();
               }
 
             }else {
                 System.out.println("les champs sont incorrect");
-                Toast.makeText(getBaseContext(),"Veuillez vérifiez que vous avez remplis tous les champs",Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(),"Please fill all fields!",Toast.LENGTH_LONG).show();
             }
 
         });
@@ -94,7 +140,7 @@ public class AddRecipe extends AppCompatActivity {
                 int imageSizeInKB = imageSizeInBytes / 1024; // Convertir en KB
 
                 if (imageSizeInKB > 1024) { // Check if the image size is greater than 1MB
-                    Toast.makeText(this, "Error: Image doit étre inférieur à 1MB", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error: Image's size must be less than 1MB", Toast.LENGTH_SHORT).show();
                     return;
                 }
 

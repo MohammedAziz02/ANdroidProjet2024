@@ -7,10 +7,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.RecipeActivity">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
 
     >
@@ -29,33 +28,19 @@
         />-->
 
     <!-- just to center this item -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-        <TextView
-            android:id="@+id/textViewRecipeName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Recipe Name"
-            android:background="@drawable/rounded_corners"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:textColor="@android:color/white"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
+
 
     <View
         android:layout_width="match_parent"
         android:layout_margin="7dp"
         android:layout_height="3dp"
-        android:background="#6854a4" />
+        android:background="#E8810C" />
 
     <ImageView
         android:id="@+id/imageViewRecipe"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_foreground"
         android:layout_below="@id/textViewRecipeName"
@@ -64,8 +49,69 @@
         android:layout_width="match_parent"
         android:layout_margin="7dp"
         android:layout_height="3dp"
-        android:background="#6854a4" />
+        android:background="#E8810C" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/textViewRecipeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Recipe Name"
+            android:textColor="#E8810C"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/textViewType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins_semibold"
+            android:layout_below="@id/textViewIngredients"
+            android:text="Type"
+            android:layout_margin="20dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/darker_gray" />
+        <TextView
+            android:id="@+id/textViewDifficulty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/poppins_semibold"
+            android:layout_below="@id/textViewIngredients"
+            android:text="Difficulté"
+            android:layout_margin="20dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/darker_gray" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_below="@id/textViewIngredients"
+        android:text="Description"
+        android:layout_margin="20dp"
+        android:textSize="18sp"
+        android:textColor="@android:color/darker_gray" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -75,12 +121,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Ingredients"
-        android:background="@drawable/rounded_corners"
+        android:text="Ingredients : "
+        android:fontFamily="@font/poppins_semibold"
         android:textStyle="bold"
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/white" />
+        android:textColor="#E8810C"
+        />
+        <!--android:background="@drawable/rounded_corners"-->
+
     </RelativeLayout>
 
 
@@ -88,40 +137,18 @@
         android:id="@+id/textViewIngredients"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/poppins_semibold"
         android:layout_below="@id/imageViewRecipe"
-        android:layout_marginTop="8dp"
         android:text="Ingredients"
         android:layout_margin="20dp"
         android:textSize="18sp"
         android:textColor="@android:color/black" />
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Description "
-            android:background="@drawable/rounded_corners"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@android:color/white" />
-    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/textViewDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewIngredients"
-        android:layout_marginTop="8dp"
-        android:text="Description"
-        android:layout_margin="20dp"
-        android:textSize="18sp"
-        android:textColor="@android:color/black" />
+
+
 
 </LinearLayout>
 
