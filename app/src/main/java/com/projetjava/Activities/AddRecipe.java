@@ -91,7 +91,7 @@ public class AddRecipe extends AppCompatActivity {
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
                 //  assurer que la taille d'image ne dépasse pas 1MB pour éviter les problèmes
                 int imageSizeInBytes = inputStream.available();
-                int imageSizeInKB = imageSizeInBytes / 1024; // Convert to KB
+                int imageSizeInKB = imageSizeInBytes / 1024; // Convertir en KB
 
                 if (imageSizeInKB > 1024) { // Check if the image size is greater than 1MB
                     Toast.makeText(this, "Error: Image doit étre inférieur à 1MB", Toast.LENGTH_SHORT).show();
