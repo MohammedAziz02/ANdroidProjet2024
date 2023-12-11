@@ -60,6 +60,7 @@ public class RecipeBaseAdapter extends BaseAdapter {
 
         view.setOnClickListener(v -> {
             System.out.println("wa akhoya clicked");
+            System.out.println("data name "+ mData.get(position).getId());
             System.out.println("data name "+ mData.get(position).getName_recipe());
             System.out.println("data ingredients "+ mData.get(position).getIngredients_recipe());
             System.out.println("date description "+mData.get(position).getDescription_recipe());
@@ -68,6 +69,7 @@ public class RecipeBaseAdapter extends BaseAdapter {
             // i made this line to resolve the problem
             //Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("RecipeId", mData.get(position).getId());
             intent.putExtra("RecipeName", mData.get(position).getName_recipe());
             intent.putExtra("RecipeType", mData.get(position).getType());
             intent.putExtra("RecipeDifficulty", mData.get(position).getDifficulty());

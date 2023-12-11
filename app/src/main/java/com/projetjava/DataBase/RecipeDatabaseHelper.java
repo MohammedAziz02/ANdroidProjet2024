@@ -158,5 +158,27 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         return recipeList;
     }
 
+    @SuppressLint("Range")
+    public long getItemIdByName(String itemName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {COLUMN_ID};
+        String selection = COLUMN_NAME + "=?";
+        String[] selectionArgs = {itemName};
+
+        Cursor cursor = db.query(TABLE_RECIPE, projection, selection, selectionArgs, null, null, null);
+
+        long itemId = -1; // Default value if not found
+
+        if (cursor != null && cursor.moveToFirst()) {
+            itemId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+            cursor.close();
+        }
+        db.close();
+
+        return itemId;
+
+    }
+
 }
 
