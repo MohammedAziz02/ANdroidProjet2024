@@ -14,13 +14,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="20dp"
-
+        android:background="#F9F6ED"
 
         >
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="30dp"
+            app:cardCornerRadius="10dp"
+            android:layout_marginLeft="5dp"
             >
             <ImageView
                 android:id="@+id/recipe_img_id"
