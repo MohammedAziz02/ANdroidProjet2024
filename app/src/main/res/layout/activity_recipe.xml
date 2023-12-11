@@ -29,7 +29,25 @@
 
     <!-- just to center this item -->
 
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="300dp"
+        android:backgroundTint="#E8810C"
+        android:text="delete"
 
+        />
+
+    <Button
+        android:id="@+id/modifyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="300dp"
+        android:backgroundTint="#E8810C"
+        android:text="Modify"
+
+        />
     <View
         android:layout_width="match_parent"
         android:layout_margin="7dp"
@@ -50,6 +68,7 @@
         android:layout_margin="7dp"
         android:layout_height="3dp"
         android:background="#E8810C" />
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -146,16 +165,7 @@
         android:textColor="@android:color/black" />
 
 
-    <Button
-        android:id="@+id/deleteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="150dp"
-        android:backgroundTint="#E8810C"
-        android:text="delete"
 
-        />
 
 
 

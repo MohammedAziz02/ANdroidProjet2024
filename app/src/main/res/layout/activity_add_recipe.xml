@@ -16,20 +16,6 @@
     android:paddingBottom="16dp"
     android:layout_margin="10dp"
     >
-
-
-<!--    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="Recipes APP"
-        android:textColor="@color/white"
-        android:background="#FFA500"
-        android:padding="10dp"
-        />-->
-
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
@@ -49,7 +35,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         >
-
         <TextView
 
             android:layout_width="0dp"
@@ -59,7 +44,6 @@
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:padding="10dp"
-
             android:text="Type        : " />
 
         <Spinner

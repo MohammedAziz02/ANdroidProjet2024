@@ -7,12 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.projetjava.Activities.MainActivity;
+import com.projetjava.Activities.ModifyRecipe;
 import com.projetjava.DataBase.RecipeDatabaseHelper;
 import com.projetjava.R;
 
@@ -51,20 +53,21 @@ public class RecipeAdapter {
         TextView textViewDescription = ((Activity) context).findViewById(R.id.textViewDescription);
         ImageView imageViewRecipe = ((Activity) context).findViewById(R.id.imageViewRecipe);
         Button deleteButton=((Activity) context).findViewById(R.id.deleteButton);
+        Button modifyButton=((Activity) context).findViewById(R.id.modifyButton);
         textViewRecipeName.setText(recipeName);
         textViewRecipeType.setText(recipeType);
         textViewRecipeDifficulty.setText(recipeDifficulty);
         textViewIngredients.setText(ingredients);
         textViewDescription.setText(description);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-        imageViewRecipe.setImageBitmap(bitmap);
+        if(imageBytes!=null){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+            imageViewRecipe.setImageBitmap(bitmap);
+        }
         deleteButton.setOnClickListener(v->{
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
             // Set the title and message for the dialog
             builder.setTitle("Confirm")
                     .setMessage("are you sure that you want to delete this recipe?");
-
             // Add a positive button and its click listener
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 @Override
@@ -77,9 +80,7 @@ public class RecipeAdapter {
                         context.startActivity(intent1);
                         Toast.makeText(context, "Recipe deleted successfully", Toast.LENGTH_SHORT).show();
                     }
-
                     else Toast.makeText(context, "recipeId is null", Toast.LENGTH_SHORT).show();
-
                     dialogInterface.dismiss(); // Close the dialog
                 }
             });
@@ -92,11 +93,24 @@ public class RecipeAdapter {
                     dialogInterface.dismiss(); // Close the dialog
                 }
             });
-
             // Create and show the AlertDialog
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
 
+        });
+        modifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long recipeId=-2;
+                recipeId=recipeDatabaseHelper.getItemIdByName(recipeName);
+               // Toast.makeText(context,"inside button click Recipe id is " + recipeId,Toast.LENGTH_LONG).show();
+                if(recipeId!=-1) {
+                    Intent intent1 = new Intent(context, ModifyRecipe.class);
+                    intent1.putExtra("RecipeId",recipeId);
+                    context.startActivity(intent1);
+                }
+                else Toast.makeText(context, "recipeId is null", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

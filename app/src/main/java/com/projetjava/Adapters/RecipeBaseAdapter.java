@@ -63,7 +63,9 @@ public class RecipeBaseAdapter extends BaseAdapter   {
         myHolder.recipeTitle.setText(mData.get(position).getName_recipe());
         myHolder.recipeType.setText(mData.get(position).getType());
         myHolder.recipeDifficulty.setText(mData.get(position).getDifficulty());
-        myHolder.img_recipe_thumbnail.setImageBitmap(BitmapFactory.decodeByteArray(mData.get(position).getImageBytes(), 0, mData.get(position).getImageBytes().length));
+        if(mData.get(position).getImageBytes()!=null){
+            myHolder.img_recipe_thumbnail.setImageBitmap(BitmapFactory.decodeByteArray(mData.get(position).getImageBytes(), 0, mData.get(position).getImageBytes().length));
+        }
 
         view.setOnClickListener(v -> {
             System.out.println("wa akhoya clicked");
@@ -71,7 +73,7 @@ public class RecipeBaseAdapter extends BaseAdapter   {
             System.out.println("data name "+ mData.get(position).getName_recipe());
             System.out.println("data ingredients "+ mData.get(position).getIngredients_recipe());
             System.out.println("date description "+mData.get(position).getDescription_recipe());
-            System.out.println("data image "+mData.get(position).getImageBytes());
+            //System.out.println("data image "+mData.get(position).getImageBytes());
             Intent intent = new Intent(mContext, RecipeActivity.class);
             // i made this line to resolve the problem
             //Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?

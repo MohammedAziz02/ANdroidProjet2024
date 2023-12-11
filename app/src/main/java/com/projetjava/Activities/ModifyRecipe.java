@@ -1,12 +1,13 @@
 package com.projetjava.Activities;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,43 +17,63 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.projetjava.DataBase.RecipeDatabaseHelper;
+import com.projetjava.Models.Recipe;
 import com.projetjava.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-// c'est la classe qui permet de faire la logique d'ajout de la recipe au Data base
-public class AddRecipe extends AppCompatActivity {
+public class ModifyRecipe extends AppCompatActivity {
+
     private static final int PICK_IMAGE_REQUEST = 1;
     private EditText editTextName, editTextDescription, editTextIngredients;
     private Spinner type,difficulty;
     private ImageView imageView;
     private Button btnChooseImage, btnSubmit;
+    private RecipeDatabaseHelper recipeDatabaseHelper;
+
     String typeChoose,difficultyChoose;
 
-    // ici j'ai créer ce variable juste pour préserver son état car avant d'envoyer la formualaire on doit afficher l'image et
-    // par la suite on click sur envoyer pour ajouter cette recipe à la base de données.
     private byte[] imageBytes;
-    private RecipeDatabaseHelper recipeDatabaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_recipe);
-        setTitle("Add Recipe");
-        type= findViewById(R.id.type);
-        difficulty= findViewById(R.id.difficulty);
-
+        setContentView(R.layout.activity_modify_recipe);
+        setTitle("Modify Recipe");
+        recipeDatabaseHelper = new RecipeDatabaseHelper(getBaseContext());
+        loadViews();
+        Intent intent = getIntent();
+        long recipeId=intent.getLongExtra("RecipeId",-1);
+       // Toast.makeText(getBaseContext(),"THis is Id "+ recipeId,Toast.LENGTH_SHORT).show();
+        Recipe r = recipeDatabaseHelper.getRecipe(recipeId);
+        //Toast.makeText(getBaseContext(),"THis is " + r,Toast.LENGTH_SHORT).show();
+        editTextName.setText(r.getName_recipe());
+        editTextDescription.setText(r.getDescription_recipe());
+        editTextIngredients.setText(r.getIngredients_recipe());
         List<String> types= new ArrayList<>(Arrays.asList("Breakfast","Lunch","Dinner","Snack"));
         List<String> difficulties= new ArrayList<>(Arrays.asList("Beginner","Intermediate","Advanced"));
-
         ArrayAdapter<String> typeAdapter= new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,types);
         ArrayAdapter<String> difficultyAdapter= new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,difficulties);
-
         type.setAdapter(typeAdapter);
         difficulty.setAdapter(difficultyAdapter);
+        String selectedType = r.getType();
+        int typePosition = typeAdapter.getPosition(selectedType);
+        type.setSelection(typePosition);
+        String selectedDifficulty = r.getDifficulty();
+        int difficultyPosition = difficultyAdapter.getPosition(selectedDifficulty);
+        difficulty.setSelection(difficultyPosition);
+        if(r.getImageBytes()!=null){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(r.getImageBytes(), 0, r.getImageBytes().length);
+            imageView.setImageBitmap(bitmap);
+            imageBytes=convertImageToByteArray(bitmap);
+        }
+        btnChooseImage.setOnClickListener((View v)-> {
+            chooseImage();
+        });
 
         type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -62,7 +83,7 @@ public class AddRecipe extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                typeChoose=r.getType();
             }
         });
 
@@ -74,39 +95,32 @@ public class AddRecipe extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                difficultyChoose=r.getDifficulty();
             }
         });
 
-        recipeDatabaseHelper = new RecipeDatabaseHelper(getBaseContext());
-        loadViews();
-        // intent implicite pour que on peut choisir une image
-        btnChooseImage.setOnClickListener((View v)-> {
-                chooseImage();
-            });
 
         btnSubmit.setOnClickListener((v)->{
             String nameRecipe= editTextName.getText().toString();
             String descriptionRecipe = editTextDescription.getText().toString();
             String ingredientsRecipe= editTextIngredients.getText().toString();
             byte[] imageInBytes=imageBytes;
-            System.out.println("btn submit clicked ");
+            System.out.println("btn submit clicked  " + nameRecipe + " "+ descriptionRecipe + " "+ ingredientsRecipe + " "+ " ");
             if(nameRecipe!=null && !nameRecipe.equals("") && descriptionRecipe!=null && !descriptionRecipe.equals("") && ingredientsRecipe!=null && !ingredientsRecipe.equals("")
-            && imageInBytes!=null &&typeChoose!=null && difficultyChoose!=null
             ){
                 System.out.println("tous les champs sont correctes ");
-                System.out.println(typeChoose+ "  :  "+difficultyChoose);
-              long result = recipeDatabaseHelper.addRecipe(nameRecipe,typeChoose.toString(),difficultyChoose.toString(),descriptionRecipe,ingredientsRecipe,imageBytes);
-              if(result!=-1){
-                  System.out.println("bien ajoute au db");
-                  Toast.makeText(getBaseContext(),"Success : Recipe is added successfully!",Toast.LENGTH_LONG).show();
-                  // on fait revenir à l'activité MAin
-                  Intent i = new Intent(getBaseContext(),MainActivity.class);
-                  startActivity(i);
-              }else{
-                  System.out.println("n'a pas bien ajoute au db");
-                  Toast.makeText(getBaseContext(),"Failure : Recipe not added!",Toast.LENGTH_LONG).show();
-              }
+                System.out.println(typeChoose.toString()+ "  :  "+difficultyChoose.toString());
+                //long result = recipeDatabaseHelper.addRecipe(nameRecipe,typeChoose.toString(),difficultyChoose.toString(),descriptionRecipe,ingredientsRecipe,imageBytes);
+                long result = recipeDatabaseHelper.updateRecipe(recipeId,nameRecipe,typeChoose.toString(),difficultyChoose.toString(),descriptionRecipe,ingredientsRecipe,imageInBytes);
+                if(result!=-1){
+                    Toast.makeText(getBaseContext(),"Success : Recipe is successfully Modified!",Toast.LENGTH_LONG).show();
+                    // on fait revenir à l'activité MAin
+                    Intent i = new Intent(getBaseContext(),MainActivity.class);
+                    startActivity(i);
+                }else{
+                    System.out.println("n'a pas bien Modifié");
+                    Toast.makeText(getBaseContext(),"Failure : Recipe not Modified!",Toast.LENGTH_LONG).show();
+                }
 
             }else {
                 System.out.println("les champs sont incorrect");
@@ -114,11 +128,19 @@ public class AddRecipe extends AppCompatActivity {
             }
 
         });
-
-
     }
 
-    // choisir une image
+    private void loadViews() {
+        editTextName = findViewById(R.id.editTextNameModify);
+        editTextDescription = findViewById(R.id.editTextDescriptionModify);
+        editTextIngredients = findViewById(R.id.editTextIngredientsModify);
+        imageView = findViewById(R.id.imageViewModify);
+        btnChooseImage = findViewById(R.id.btnChooseImageModify);
+        btnSubmit = findViewById(R.id.btnSubmitModify);
+        type= findViewById(R.id.typeModify);
+        difficulty= findViewById(R.id.difficultyModify);
+    }
+
     private void chooseImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -130,7 +152,6 @@ public class AddRecipe extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             try {
                 InputStream inputStream = getContentResolver().openInputStream(data.getData());
@@ -158,14 +179,4 @@ public class AddRecipe extends AppCompatActivity {
         return baos.toByteArray();
     }
 
-
-    //// juste pour avoir les ids des view correspondent correctement au objets déclarés.
-    private void loadViews() {
-        editTextName = findViewById(R.id.editTextName);
-        editTextDescription = findViewById(R.id.editTextDescription);
-        editTextIngredients = findViewById(R.id.editTextIngredients);
-        imageView = findViewById(R.id.imageView);
-        btnChooseImage = findViewById(R.id.btnChooseImage);
-        btnSubmit = findViewById(R.id.btnSubmit);
-    }
 }

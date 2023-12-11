@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         // il fait revenir les recipes qui existe dans la base de données et les affiché dans LitView a l'aide de RecipeBaseAdapter
         loadItemsIntoListView();
 
+        //List<Recipe> list = recipeDatabaseHelper.getAllRecipes();
+       // System.out.println(list);
+
 
 
 
@@ -67,5 +70,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         System.out.println("On start executed");
        loadItemsIntoListView();
+
+       //List<Recipe> list = recipeDatabaseHelper.getAllRecipes();
+        //System.out.println(list);
     }
 }
