@@ -30,7 +30,6 @@ public class AddRecipe extends AppCompatActivity {
     private Spinner type,difficulty;
     private ImageView imageView;
     private Button btnChooseImage, btnSubmit;
-
     String typeChoose,difficultyChoose;
 
     // ici j'ai créer ce variable juste pour préserver son état car avant d'envoyer la formualaire on doit afficher l'image et

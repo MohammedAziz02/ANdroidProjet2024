@@ -1,5 +1,8 @@
 package com.projetjava.Adapters;
+import android.app.AlertDialog;
 import android.content.Context;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -8,15 +11,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+
+
 import com.projetjava.Activities.RecipeActivity;
 import com.projetjava.Models.Recipe;
 import com.projetjava.R;
 import java.util.List;
 
 // c'est pour la view d'accueil càd on affiche seulement l'image et le title de recipe
-public class RecipeBaseAdapter extends BaseAdapter {
+public class RecipeBaseAdapter extends BaseAdapter   {
     private Context mContext;
     private List<Recipe> mData;
+
 
     public RecipeBaseAdapter(Context mContext, List<Recipe> mData) {
         this.mContext = mContext;
@@ -74,11 +81,16 @@ public class RecipeBaseAdapter extends BaseAdapter {
             intent.putExtra("RecipeIngredients", mData.get(position).getIngredients_recipe());
             intent.putExtra("RecipeMethodTitle", mData.get(position).getDescription_recipe());
             intent.putExtra("ImageBytes", mData.get(position).getImageBytes());
-
             mContext.startActivity(intent);
         });
+
+
+
+
         return view;
     }
+
+
 
     public class MyHolder {
         TextView recipeTitle;
@@ -92,5 +104,6 @@ public class RecipeBaseAdapter extends BaseAdapter {
             img_recipe_thumbnail = itemView.findViewById(R.id.recipe_img_id);
         }
     }
+
 }
 

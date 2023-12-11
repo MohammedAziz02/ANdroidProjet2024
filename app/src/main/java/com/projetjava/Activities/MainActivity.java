@@ -2,6 +2,8 @@ package com.projetjava.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -33,6 +35,11 @@ public class MainActivity extends AppCompatActivity {
         goToAddRecipeView();
         // il fait revenir les recipes qui existe dans la base de données et les affiché dans LitView a l'aide de RecipeBaseAdapter
         loadItemsIntoListView();
+
+
+
+
+
     }
 
 
