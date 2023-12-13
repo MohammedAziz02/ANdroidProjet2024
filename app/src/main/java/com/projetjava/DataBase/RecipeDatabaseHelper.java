@@ -64,7 +64,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
         db.execSQL(CREATE_TABLE_RECIPE);
         db.execSQL(CREATE_TABLE_USER);
     }
@@ -77,7 +76,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     }
 
     // CRUD Operations
-
     public long addRecipe(String name,String type,String difficulty, String description, String ingredients, byte[] imageBytes) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -87,7 +85,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_INGREDIENTS, ingredients);
         values.put(COLUMN_IMAGE, imageBytes);
-
         long id = db.insert(TABLE_RECIPE, null, values);
         db.close();
         return id;
@@ -102,10 +99,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = {String.valueOf(recipeId)};
         Cursor cursor = db.query(TABLE_RECIPE, columns, selection, selectionArgs, null, null, null);
         Recipe recipe = null;
-
-
-
-
         if (cursor != null && cursor.moveToFirst()) {
             recipe = new Recipe(
                     cursor.getInt(cursor.getColumnIndex(COLUMN_ID)),
@@ -131,10 +124,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_DESCRIPTION, description);
         values.put(COLUMN_INGREDIENTS, ingredients);
         values.put(COLUMN_IMAGE, imageBytes);
-
         String whereClause = COLUMN_ID + "=?";
         String[] whereArgs = {String.valueOf(recipeId)};
-
         int rowsAffected = db.update(TABLE_RECIPE, values, whereClause, whereArgs);
         db.close();
         return rowsAffected;
@@ -144,7 +135,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         String whereClause = COLUMN_ID + "=?";
         String[] whereArgs = {String.valueOf(recipeId)};
-
         int rowsAffected = db.delete(TABLE_RECIPE, whereClause, whereArgs);
         db.close();
         return rowsAffected;
@@ -156,9 +146,7 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         List<Recipe> recipeList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {COLUMN_ID, COLUMN_NAME,COLUMN_TYPE,COLUMN_DIFFICULTY, COLUMN_DESCRIPTION, COLUMN_INGREDIENTS, COLUMN_IMAGE};
-
         Cursor cursor = db.query(TABLE_RECIPE, columns, null, null, null, null, null);
-
         if (cursor != null && cursor.moveToFirst()) {
             do {
                Recipe recipe = new Recipe(
@@ -172,10 +160,8 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
                 );
                 recipeList.add(recipe);
             } while (cursor.moveToNext());
-
             cursor.close();
         }
-
         db.close();
         return recipeList;
     }
@@ -183,21 +169,16 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public long getItemIdByName(String itemName) {
         SQLiteDatabase db = this.getReadableDatabase();
-
         String[] projection = {COLUMN_ID};
         String selection = COLUMN_NAME + "=?";
         String[] selectionArgs = {itemName};
-
         Cursor cursor = db.query(TABLE_RECIPE, projection, selection, selectionArgs, null, null, null);
-
         long itemId = -1; // Default value if not found
-
         if (cursor != null && cursor.moveToFirst()) {
             itemId = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
             cursor.close();
         }
         db.close();
-
         return itemId;
 
     }
@@ -207,7 +188,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         User user = null;
-
         try {
             String query = "SELECT * FROM " + TABLE_USER + " WHERE " + COLUMN_IS_LOGGED_IN + " = 1";
             cursor = db.rawQuery(query, null);
@@ -226,7 +206,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
             }
             db.close();
         }
-
         return user;
     }
     // Méthode pour récupérer un utilisateur par e-mail et mot de passe
@@ -235,7 +214,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         User user = null;
-
         try {
             String query = "SELECT * FROM " + TABLE_USER +
                     " WHERE " + COLUMN_USER_EMAIL + " = ? AND " + COLUMN_USER_PASSWORD + " = ?";
@@ -266,7 +244,6 @@ public class RecipeDatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_USER_PHONE, phone);
         values.put(COLUMN_USER_EMAIL, email);
         values.put(COLUMN_USER_PASSWORD, password);
-
         long userId = db.insert(TABLE_USER, null, values);
         db.close();
         return userId;

@@ -45,11 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = getIntent();
         intent.getExtras();
 
-//        if (recipeDatabaseHelper.isUserLoggedIn()) {
-//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//            finish();
-//        }
-
         if(intent.hasExtra("warning"))
         {
             Snackbar. make(findViewById(R.id.txt_login),intent.getStringExtra("warning"),BaseTransientBottomBar.LENGTH_LONG).show();
@@ -90,19 +85,7 @@ public class LoginActivity extends AppCompatActivity {
             loginProgressBar.setVisibility(View.INVISIBLE);
         }
     }
-//        firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()){
-//                    finish();
-//                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
-//                }
-//                else {
-//                    Snackbar.make(view,"Error ! " + task.getException().getMessage(), BaseTransientBottomBar.LENGTH_LONG).show();
-//                    loginProgressBar.setVisibility(View.INVISIBLE);
-//                }
-//            }
-//        });
+
 
 
     public void btnRegister(View view) {

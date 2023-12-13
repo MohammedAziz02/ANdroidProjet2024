@@ -49,47 +49,38 @@ public class RegisterActivity extends AppCompatActivity {
         mPassword = findViewById(R.id.txt_password);
         mLogin = findViewById(R.id.txt_login);
         mProgressBar = findViewById(R.id.registerProgressBar);
-
         recipeDatabaseHelper = new RecipeDatabaseHelper(this);
-
         if (recipeDatabaseHelper.getCurrentUser() != null) {
             finish();
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
         }
 
     }
-
     public void register(final View view) {
         final String email = mEmail.getText().toString().trim();
         String password = mPassword.getText().toString().trim();
         final String fullName = mName.getText().toString().trim();
         final String phone = mPhone.getText().toString().trim();
-
         if (TextUtils.isEmpty(email)){
             mEmail.setError("Email is Required.");
             return;
         }
-
         if (TextUtils.isEmpty(password)){
             mPassword.setError("Password is Required.");
             return;
         }
-
         if (password.length() < 6){
             mPassword.setError("Password Must be >= 6 Characters");
             return;
         }
-
         mProgressBar.setVisibility(View.VISIBLE);
-
         // Ajoutez le code pour enregistrer l'utilisateur à l'aide de RecipeDatabaseHelper
         long userId = recipeDatabaseHelper.addUser(fullName, email,phone, password);
-
         if (userId != -1) {
             // L'utilisateur a été ajouté avec succès dans la base de données locale
             Snackbar.make(view,"User Created", BaseTransientBottomBar.LENGTH_LONG).show();
             finish();
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         } else {
             // Une erreur s'est produite lors de l'ajout de l'utilisateur
             Snackbar.make(view,"Error creating user", BaseTransientBottomBar.LENGTH_LONG).show();
@@ -97,8 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         mProgressBar.setVisibility(View.INVISIBLE);
     }
-
-
     public void login(View view) {
         startActivity(new Intent(this,LoginActivity.class));
     }
