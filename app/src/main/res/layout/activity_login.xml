@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:gravity="center"
-            android:onClick="btnForgotPassword"
-            android:text="RECIPES YUMMY"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="YUMMY RECIPES"
             android:textColor="#E8810C"
             android:textSize="30sp"
             android:textStyle="bold" />
@@ -59,7 +59,8 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1.7"
                 android:backgroundTint="#F9F6ED"
-                android:hint="Username"
+                android:hint="Email"
+                android:fontFamily="@font/poppins_semibold"
                 android:inputType="textEmailAddress"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -87,6 +88,7 @@
                 android:layout_weight="1.7"
                 android:backgroundTint="#F9F6ED"
                 android:hint="Password"
+                android:fontFamily="@font/poppins_semibold"
                 android:inputType="textWebPassword"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -99,6 +101,7 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="#E8810C"
             android:onClick="btnLogin"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Login"
             android:textColor="#ffffff"
             android:textSize="18sp" />
@@ -111,6 +114,7 @@
             android:gravity="center"
             android:onClick="btnForgotPassword"
             android:text="Forgot Password?"
+            android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -121,6 +125,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Don't have an account yet? SIGN UP"
+            android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -135,6 +140,7 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="#E8810C"
             android:onClick="btnGuestLogin"
+            android:fontFamily="@font/poppins_semibold"
             android:text="Guest Login"
             android:textColor="#ffffff"
             android:textSize="18sp" />
