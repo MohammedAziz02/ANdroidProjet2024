@@ -1,4 +1,4 @@
-package com.projetjava.Activities;
+package com.projetjava.Models;
 
 public class User {
     private int id;

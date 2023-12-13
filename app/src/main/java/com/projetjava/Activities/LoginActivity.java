@@ -1,6 +1,5 @@
 package com.projetjava.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 //import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.projetjava.DataBase.RecipeDatabaseHelper;
+import com.projetjava.Models.User;
 import com.projetjava.R;
 
 public class LoginActivity extends AppCompatActivity {
